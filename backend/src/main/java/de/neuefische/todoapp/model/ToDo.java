@@ -12,6 +12,6 @@ public class ToDo {
 
     private String id;
     private String description;
-    private String status;
+    private ToDoStatus status;
 
 }
