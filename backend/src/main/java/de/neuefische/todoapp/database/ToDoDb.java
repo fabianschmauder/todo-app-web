@@ -20,12 +20,24 @@ public class ToDoDb {
         return toDos;
     }
 
-    public ToDo addToDo(ToDo newToDo) {
+      public ToDo addToDo(ToDo newToDo) {
         String uuid = UUID.randomUUID().toString();
         newToDo.setId(uuid);
         newToDo.setStatus(ToDoStatus.OPEN);
         toDos.add(newToDo);
         return newToDo;
     }
+
+    public ToDo updateStatus(String id, ToDoStatus newStatus) {
+        for (int i = 0; i < toDos.size(); i++) {
+            if (toDos.get(i).getId().equals(id)) {
+                toDos.get(i).setStatus(newStatus);
+                ToDo updatedToDo = toDos.get(i);
+                return updatedToDo;
+            }
+        }
+        return null;
+    }
+
 
 }

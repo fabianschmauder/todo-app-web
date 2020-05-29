@@ -1,6 +1,7 @@
 package de.neuefische.todoapp.controller;
 
 import de.neuefische.todoapp.model.ToDo;
+import de.neuefische.todoapp.model.ToDoStatus;
 import de.neuefische.todoapp.service.ToDoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,21 +12,26 @@ import java.util.List;
 @RequestMapping("api/todo")
 public class ToDoController {
 
-private final ToDoService toDoService;
+    private final ToDoService toDoService;
 
-@Autowired
+    @Autowired
     public ToDoController(ToDoService toDoService) {
-    this.toDoService = toDoService;
-}
+        this.toDoService = toDoService;
+    }
 
-@GetMapping
-public List<ToDo> getToDos() {
-    return toDoService.getToDos();
-}
+    @GetMapping
+    public List<ToDo> getToDos() {
+        return toDoService.getToDos();
+    }
 
-@PutMapping
-public ToDo addToDo(@RequestBody ToDo newToDo) {
-    return toDoService.addToDo(newToDo);
-}
+    @PutMapping
+    public ToDo addToDo(@RequestBody ToDo newToDo) {
+        return toDoService.addToDo(newToDo);
+    }
+
+    @PostMapping("{id}/status")
+    public ToDo updateStatus(@PathVariable String id, @RequestBody ToDoStatus newStatus) {
+        return toDoService.updateStatus(id, newStatus);
+    }
 
 }
