@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Repository
 public class ToDoDb {
@@ -20,6 +21,9 @@ public class ToDoDb {
     }
 
     public ToDo addToDo(ToDo newToDo) {
+        String uuid = UUID.randomUUID().toString();
+        newToDo.setId(uuid);
+        newToDo.setStatus(ToDoStatus.OPEN);
         toDos.add(newToDo);
         return newToDo;
     }
