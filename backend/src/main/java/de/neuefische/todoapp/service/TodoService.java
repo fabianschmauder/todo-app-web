@@ -22,5 +22,4 @@ public class TodoService {
     public ArrayList<Task> getTasks(){
         return todoDB.getTasks();
     }
-
 }
