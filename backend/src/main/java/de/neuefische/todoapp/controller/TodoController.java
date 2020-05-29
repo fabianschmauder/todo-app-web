@@ -22,9 +22,6 @@ public class TodoController {
         this.todoService = todoService;
     }
 
-    @Autowired
-
-
     @GetMapping("todo")
     public ArrayList<Task> getAllTodo(){
         return todoService.getTasks();
