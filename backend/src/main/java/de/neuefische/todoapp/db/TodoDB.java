@@ -23,7 +23,15 @@ public class TodoDB {
         return tasks;
     }
 
+    public String getDescriptionFromTodoDB(int index){
+        return tasks.get(index).getDescription();
+    }
 
+    public void clearDB() {
+        tasks.clear();
+    }
 
-
+    public void addTask(Task task){
+        tasks.add(task);
+    }
 }
