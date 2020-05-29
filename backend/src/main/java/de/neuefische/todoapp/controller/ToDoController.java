@@ -1,29 +1,38 @@
 package de.neuefische.todoapp.controller;
 
 
-import de.neuefische.todoapp.enums.Status;
+import de.neuefische.todoapp.data.Description;
 import de.neuefische.todoapp.models.ToDoNote;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import de.neuefische.todoapp.service.ToDoService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("api/todo")
 public class ToDoController {
 
-    private ToDoNote note;
+    private final ToDoService toDoService;
 
-  @GetMapping
+    @Autowired
+    public ToDoController(ToDoService toDoService) {
+        this.toDoService = toDoService;
+    }
+
+    @GetMapping
   public List<ToDoNote> getToDos (){
-
-      List<ToDoNote> listOfToDos = new ArrayList<>();
-      listOfToDos.add(new ToDoNote("1", "Hallo", Status.OPEN));
-      listOfToDos.add(new ToDoNote("2", "Hello again", Status.DONE));
-      listOfToDos.add(new ToDoNote("3", "Hello once more", Status.IN_PROGRESS));
-
-      return listOfToDos;
+      return toDoService.getAllNotes();
   }
+
+    @PutMapping
+    public ToDoNote addANote(@RequestBody Description description){
+        return toDoService.addANote(description);
+  }
+
+    @DeleteMapping("{id}")
+    public void deleteNote(@PathVariable String id){
+        toDoService.deleteNotes(id);
+  }
+
 }
