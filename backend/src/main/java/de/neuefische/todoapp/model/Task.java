@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 public class Task {
     private String id;
     private String description;
-    private String status;
+    private Status status;
 }
