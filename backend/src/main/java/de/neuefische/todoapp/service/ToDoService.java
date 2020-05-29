@@ -21,4 +21,8 @@ public class ToDoService {
         return toDoDb.getToDos();
     }
 
+    public ToDo addToDo(ToDo newToDo) {
+        return toDoDb.addToDo(newToDo);
+    }
+
 }

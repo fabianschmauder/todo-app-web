@@ -19,4 +19,9 @@ public class ToDoDb {
         return toDos;
     }
 
+    public ToDo addToDo(ToDo newToDo) {
+        toDos.add(newToDo);
+        return newToDo;
+    }
+
 }
