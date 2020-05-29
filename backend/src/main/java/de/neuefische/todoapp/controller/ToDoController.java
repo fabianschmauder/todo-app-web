@@ -2,6 +2,7 @@ package de.neuefische.todoapp.controller;
 
 import de.neuefische.todoapp.model.ToDo;
 import de.neuefische.todoapp.model.ToDoStatus;
+import de.neuefische.todoapp.model.UpdateToDoStatus;
 import de.neuefische.todoapp.service.ToDoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -30,8 +31,13 @@ public class ToDoController {
     }
 
     @PostMapping("{id}/status")
-    public ToDo updateStatus(@PathVariable String id, @RequestBody ToDoStatus newStatus) {
-        return toDoService.updateStatus(id, newStatus);
+    public ToDo updateStatus(@PathVariable String id, @RequestBody UpdateToDoStatus updateToDoStatus) {
+        return toDoService.updateStatus(id, updateToDoStatus.getToDoStatus());
+    }
+
+    @DeleteMapping("{id}")
+    public void deleteToDo(@PathVariable String id) {
+        toDoService.deleteToDo(id);
     }
 
 }

@@ -30,4 +30,8 @@ public class ToDoService {
         return toDoDb.updateStatus(id, newStatus);
     }
 
+    public void deleteToDo(String id) {
+        toDoDb.deleteToDo(id);
+    }
+
 }

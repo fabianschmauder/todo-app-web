@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -20,7 +21,7 @@ public class ToDoDb {
         return toDos;
     }
 
-      public ToDo addToDo(ToDo newToDo) {
+    public ToDo addToDo(ToDo newToDo) {
         String uuid = UUID.randomUUID().toString();
         newToDo.setId(uuid);
         newToDo.setStatus(ToDoStatus.OPEN);
@@ -28,12 +29,24 @@ public class ToDoDb {
         return newToDo;
     }
 
+    public Optional<ToDo> getToDoById(String id) {
+        for (ToDo toDo : toDos) {
+            if (toDo.getId().equals(id)) {
+                return Optional.of(toDo);
+            }
+        }
+        return Optional.empty();
+    }
+
+    public void deleteToDo(String id) {
+        toDos.remove(getToDoById(id));
+    }
+
     public ToDo updateStatus(String id, ToDoStatus newStatus) {
-        for (int i = 0; i < toDos.size(); i++) {
-            if (toDos.get(i).getId().equals(id)) {
-                toDos.get(i).setStatus(newStatus);
-                ToDo updatedToDo = toDos.get(i);
-                return updatedToDo;
+        for (ToDo toDo : toDos) {
+            if (toDo.getId().equals(id)) {
+                toDo.setStatus(newStatus);
+                return toDo;
             }
         }
         return null;
