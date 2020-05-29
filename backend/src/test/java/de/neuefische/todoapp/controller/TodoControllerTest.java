@@ -1,8 +1,16 @@
 package de.neuefische.todoapp.controller;
 
+import de.neuefische.todoapp.db.TodoDB;
+import de.neuefische.todoapp.model.Status;
+import de.neuefische.todoapp.model.Task;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,9 +20,30 @@ class TodoControllerTest {
     @LocalServerPort
     private int port;
 
+    @Autowired
+    private TestRestTemplate restTemplate;
+
+    @Autowired
+    private TodoDB todoDB;
+
+
+    @BeforeEach
+    public void resetDatabase(){
+        todoDB.clearDB();
+    }
 
 
     @Test
-    void getAllTodo() {
+    public void getAllTodoTodoDBLengthShouldEqual1() {
+        //GIVEN
+        todoDB.addTask(new Task("123", "Google RestTemplate", Status.OPEN));
+        //WHEN
+        ResponseEntity<Task[]> response = restTemplate.getForEntity("http://localhost:" + port + "/api/todo", Task[].class);
+        HttpStatus statusCode = response.getStatusCode();
+        Task[] tasks = response.getBody();
+
+        //THEN
+        assertEquals(HttpStatus.OK, statusCode);
+        assertEquals(1, tasks.length);
     }
 }
