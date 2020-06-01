@@ -2,7 +2,9 @@ package de.neuefische.todoapp.database;
 
 import de.neuefische.todoapp.model.ToDo;
 import de.neuefische.todoapp.model.ToDoStatus;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,13 +31,22 @@ public class ToDoDb {
         return newToDo;
     }
 
-    public Optional<ToDo> getToDoById(String id) {
+    /*public Optional<ToDo> getToDoById(String id) {
         for (ToDo toDo : toDos) {
             if (toDo.getId().equals(id)) {
                 return Optional.of(toDo);
             }
         }
         return Optional.empty();
+    }*/
+
+    public ToDo getToDoById(String id) {
+        for (ToDo toDo : toDos) {
+            if (toDo.getId().equals(id)) {
+                return toDo;
+            }
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Todo with id "+id+" not found");
     }
 
     public void deleteToDo(String id) {
@@ -49,7 +60,7 @@ public class ToDoDb {
                 return toDo;
             }
         }
-        return null;
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Status cannot be updated");
     }
 
 
