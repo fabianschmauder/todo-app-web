@@ -1,6 +1,7 @@
 package de.neuefische.todoapp.db;
 
 import de.neuefische.todoapp.model.TodoItem;
+import de.neuefische.todoapp.model.TodoStatus;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -19,7 +20,17 @@ public class TodoDb {
     return todoItems;
   }
 
-  public void clearDb(){
+  public void clearDb() {
     todoItems.clear();
+  }
+
+  public TodoItem updateTodoStatus(String id, TodoStatus status) {
+    for (TodoItem todoItem : todoItems) {
+      if (todoItem.getId().equals(id)) {
+        todoItem.setStatus(status);
+        return todoItem;
+      }
+    }
+    return null;
   }
 }

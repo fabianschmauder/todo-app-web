@@ -35,4 +35,8 @@ public class TodoService {
     String randomId = idGenerationService.generateRandomId();
     return new TodoItem(randomId, data.getDescription(), TodoStatus.OPEN);
   }
+
+  public TodoItem updateTodoStatus(String id, TodoStatus status) {
+    return db.updateTodoStatus(id,status);
+  }
 }
