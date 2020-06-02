@@ -4,6 +4,7 @@ import de.neuefische.todoapp.db.TodoDb;
 import de.neuefische.todoapp.model.TodoItem;
 import de.neuefische.todoapp.model.TodoStatus;
 import de.neuefische.todoapp.model.dto.AddTodoDTO;
+import de.neuefische.todoapp.model.dto.UpdateStatusDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +69,25 @@ class TodoControllerTest {
 
     assertEquals(1, db.getAllItems().size());
     assertTrue( db.getAllItems().contains(addedItem));
+  }
+
+  @Test
+  public void updateStatusShouldUpdatedTodoItemStatus(){
+    //GIVEN
+    db.addItem(new TodoItem("1", "first todo", TodoStatus.OPEN));
+    db.addItem(new TodoItem("2", "done todo", TodoStatus.OPEN));
+
+    HttpEntity<UpdateStatusDto> entity = new HttpEntity<>(new UpdateStatusDto(TodoStatus.DONE));
+
+    //WHEN
+    String updateStatusUrl = getTodoApiUrl()+"/2/status";
+    ResponseEntity<TodoItem> response = restTemplate.exchange(updateStatusUrl, HttpMethod.PUT, entity, TodoItem.class);
+
+    //THEN
+    TodoItem expectedItem = new TodoItem("2", "done todo", TodoStatus.DONE);
+
+    assertEquals(expectedItem,response.getBody());
+    assertTrue( db.getAllItems().contains(expectedItem));
   }
 
   private String getTodoApiUrl() {

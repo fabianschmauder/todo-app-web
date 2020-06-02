@@ -27,4 +27,21 @@ class TodoDbTest {
     assertTrue(items.contains(new TodoItem("2", "Some other todo item", TodoStatus.DONE)));
 
   }
+
+  @Test
+  public void updateTotoStatusShouldUpdatedItemStatus(){
+    //GIVEN
+    todoDb.addItem(new TodoItem("1", "Some todo", TodoStatus.OPEN));
+    todoDb.addItem(new TodoItem("2", "Some other todo item", TodoStatus.IN_PROGRESS));
+
+    //WHEN
+    TodoItem todoItem = todoDb.updateTodoStatus("2", TodoStatus.DONE);
+
+    //THEN
+    assertEquals(todoItem, new TodoItem("2", "Some other todo item", TodoStatus.DONE));
+    List<TodoItem> items = todoDb.getAllItems();
+    assertEquals(2, items.size());
+    assertTrue(items.contains(new TodoItem("1", "Some todo", TodoStatus.OPEN)));
+    assertTrue(items.contains(new TodoItem("2", "Some other todo item", TodoStatus.DONE)));
+  }
 }
