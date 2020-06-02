@@ -18,4 +18,8 @@ public class TodoDb {
   public List<TodoItem> getAllItems() {
     return todoItems;
   }
+
+  public void clearDb(){
+    todoItems.clear();
+  }
 }
