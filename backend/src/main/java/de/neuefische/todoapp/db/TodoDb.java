@@ -24,13 +24,28 @@ public class TodoDb {
     todoItems.clear();
   }
 
-  public TodoItem updateTodoStatus(String id, TodoStatus status) {
+  private TodoItem findItemById(String id){
     for (TodoItem todoItem : todoItems) {
       if (todoItem.getId().equals(id)) {
-        todoItem.setStatus(status);
         return todoItem;
       }
     }
     return null;
+  }
+
+  public TodoItem updateTodoStatus(String id, TodoStatus status) {
+    TodoItem item = findItemById(id);
+    if(item != null){
+      item.setStatus(status);
+      return item;
+    }
+    return null;
+  }
+
+  public void deleteTodoItem(String id) {
+    TodoItem item = findItemById(id);
+    if(item != null){
+      todoItems.remove(item);
+    }
   }
 }
