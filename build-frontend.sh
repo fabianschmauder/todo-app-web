@@ -1,3 +1,7 @@
+# to run the script you need node installed ( brew install node)
+# init static folder
+mkdir ./backend/src/main/resources/static
+
 # go to frontend
 cd ./frontend || exit
 
