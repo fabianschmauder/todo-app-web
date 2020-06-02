@@ -39,4 +39,8 @@ public class TodoService {
   public TodoItem updateTodoStatus(String id, TodoStatus status) {
     return db.updateTodoStatus(id,status);
   }
+
+  public void deleteTodoItem(String id) {
+    db.deleteTodoItem(id);
+  }
 }

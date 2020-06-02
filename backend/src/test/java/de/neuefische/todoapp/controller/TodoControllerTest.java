@@ -90,6 +90,22 @@ class TodoControllerTest {
     assertTrue( db.getAllItems().contains(expectedItem));
   }
 
+  @Test
+  public void deleteTodoItemShouldDeleteItemFromDb(){
+    //GIVEN
+    db.addItem(new TodoItem("1", "first todo", TodoStatus.OPEN));
+    db.addItem(new TodoItem("2", "done todo", TodoStatus.OPEN));
+
+    //WHEN
+    String deleteUrl = getTodoApiUrl()+"/2";
+    ResponseEntity<Void> response = restTemplate.exchange(deleteUrl, HttpMethod.DELETE, null, Void.class);
+
+    //THEN
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertEquals(1, db.getAllItems().size());
+    assertTrue( db.getAllItems().contains(new TodoItem("1", "first todo", TodoStatus.OPEN)));
+  }
+
   private String getTodoApiUrl() {
     return "http://localhost:" + port + "/api/todo";
   }

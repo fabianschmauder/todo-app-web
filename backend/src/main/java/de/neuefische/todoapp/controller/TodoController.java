@@ -5,6 +5,7 @@ import de.neuefische.todoapp.model.dto.AddTodoDTO;
 import de.neuefische.todoapp.model.dto.UpdateStatusDto;
 import de.neuefische.todoapp.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -38,6 +39,11 @@ public class TodoController {
   @PutMapping("{id}/status")
   public TodoItem updateTodoStatus(@PathVariable String id, @RequestBody UpdateStatusDto updateStatusDto) {
     return todoService.updateTodoStatus(id, updateStatusDto.getStatus());
+  }
+
+  @DeleteMapping("{id}")
+  public void deleteTodItem(@PathVariable String id){
+    todoService.deleteTodoItem(id);
   }
 
 }
